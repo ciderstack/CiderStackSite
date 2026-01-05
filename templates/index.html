@@ -311,7 +311,7 @@
     /* Screenshot Gallery */
     .screenshots {
       padding: 4rem 1.5rem;
-      background: white;
+      background: var(--gray-50);
     }
     
     .screenshots-inner {
@@ -320,9 +320,12 @@
     }
     
     .screenshot-main {
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+      box-shadow: 0 20px 60px -12px rgba(0,0,0,0.25), 0 8px 24px -4px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.08);
+      background: white;
+      padding: 0.5rem;
+      border: 1px solid var(--gray-200);
     }
     
     .screenshot-main img {
@@ -330,6 +333,14 @@
       height: auto;
       display: block;
       max-width: 100%;
+      border-radius: 12px;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      transition: transform 0.3s ease;
+    }
+    
+    .screenshot-main:hover img {
+      transform: scale(1.01);
     }
     
     .screenshot-tabs {
@@ -1149,6 +1160,15 @@
       /* Screenshots */
       .screenshots {
         padding: 3rem 1rem;
+      }
+      
+      .screenshot-main {
+        padding: 0.375rem;
+        border-radius: 12px;
+      }
+      
+      .screenshot-main img {
+        border-radius: 8px;
       }
       
       .screenshot-tabs {
