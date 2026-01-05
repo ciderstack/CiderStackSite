@@ -1,6 +1,6 @@
 # CiderStack Website
 
-Website for CiderStack - macOS VMs That Clean Up After Themselves.
+CiderStack
 
 ## Setup
 
@@ -20,7 +20,7 @@ pip install flask
 python app.py
 ```
 
-The site will be available at `http://localhost:8080`
+The site will be available at `http://localhost:5000`
 
 ## Project Structure
 
