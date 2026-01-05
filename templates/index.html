@@ -901,6 +901,60 @@
       flex-wrap: wrap;
     }
     
+    /* Countdown Timer */
+    .countdown-container {
+      margin: 2rem 0;
+    }
+    
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 600px) {
+      .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+    }
+    
+    .countdown-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    
+    .countdown-value {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: white;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+    }
+    
+    .countdown-label {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+    
+    .countdown-message {
+      color: var(--gray-300);
+      font-size: 1rem;
+      margin-top: 2rem;
+      font-weight: 500;
+    }
+    
     /* Tech Stack */
     .tech-stack {
       padding: 4rem 1.5rem;
@@ -1041,7 +1095,7 @@
       <div class="hero-content">
         <div class="hero-badge">
           <span class="hero-badge-dot"></span>
-          Now in Beta
+          Beta Available January 9, 2026
         </div>
         <h1 class="brand-font">
           The Mac VM platform that actually gets out of your way.
@@ -1110,6 +1164,63 @@
       document.getElementById('main-screenshot').src = src;
       document.querySelectorAll('.screenshot-tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
+    }
+    
+    // Countdown Timer
+    function updateCountdown() {
+      try {
+        // January 9, 2026 at 6:00 PM PST (UTC-8)
+        // Create date explicitly: Jan 9, 2026 6:00 PM PST = Jan 10, 2026 2:00 AM UTC
+        // Using Date.UTC(year, month (0-indexed), day, hour, minute, second)
+        const releaseDate = new Date(Date.UTC(2026, 0, 10, 2, 0, 0));
+        
+        // Verify date is valid
+        if (isNaN(releaseDate.getTime())) {
+          console.error('Invalid release date');
+          return;
+        }
+        
+        const now = new Date();
+        const difference = releaseDate.getTime() - now.getTime();
+        
+        if (difference <= 0) {
+          // Countdown finished - show download button
+          document.getElementById('countdown').style.display = 'none';
+          document.getElementById('countdown-message').style.display = 'none';
+          document.getElementById('download-button').style.display = 'flex';
+          return;
+        }
+        
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        
+        // Update DOM elements
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        
+        if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+        if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+        if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+        if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+      } catch (error) {
+        console.error('Countdown error:', error);
+      }
+    }
+    
+    // Wait for DOM to be ready, then start countdown
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      });
+    } else {
+      // DOM is already ready
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
     }
   </script>
 
@@ -1558,13 +1669,36 @@ def456  "Post-install"   1h ago</span></code></pre>
   <!-- CTA -->
   <section id="cta" class="cta">
     <div class="cta-inner">
-      <div class="cta-badge">Now in Beta</div>
+      <div class="cta-badge">Beta Available September 1, 2026</div>
       <h2 class="brand-font">Ready to try CiderStack?</h2>
       <p>
         Download the beta and start managing macOS VMs the way you've always wanted.
         Free for personal use—no credit card required.
       </p>
-      <div class="cta-buttons">
+      
+      <div class="countdown-container">
+        <div class="countdown-grid" id="countdown">
+          <div class="countdown-item">
+            <div class="countdown-value" id="days">00</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-value" id="hours">00</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-value" id="minutes">00</div>
+            <div class="countdown-label">Minutes</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-value" id="seconds">00</div>
+            <div class="countdown-label">Seconds</div>
+          </div>
+        </div>
+        <div class="countdown-message" id="countdown-message">Until beta release at 6:00 PM PST</div>
+      </div>
+      
+      <div class="cta-buttons" id="download-button" style="display: none;">
         <a href="#" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
           Download for Mac
         </a>
