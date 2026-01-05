@@ -30,11 +30,6 @@ Simple command:
 gunicorn -w 4 -b 0.0.0.0:8080 app:app
 ```
 
-With config file (recommended):
-```bash
-gunicorn -c gunicorn_config.py app:app
-```
-
 Command-line options explained:
 - `-w 4`: Use 4 worker processes
 - `-b 0.0.0.0:8080`: Bind to all interfaces on port 8080
@@ -42,8 +37,6 @@ Command-line options explained:
 - `--access-logfile -`: Log access to stdout
 - `--error-logfile -`: Log errors to stdout
 - `app:app`: Module name (`app.py`) and Flask instance (`app`)
-
-The config file (`gunicorn_config.py`) automatically sets workers based on CPU count and includes recommended production settings.
 
 ## Project Structure
 
